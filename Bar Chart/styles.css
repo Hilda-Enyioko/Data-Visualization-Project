@@ -2,24 +2,47 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Roboto, sans-serif;
 }
 
 body {
+    background-color: rgb(74, 163, 163);
+}
+
+#chart {
+    width: 80%;
+    margin: 1px auto;
     background-color: rgb(233, 255, 255);
+    box-shadow: 5px 5px 15px rgba(0, 64, 64, 0.6);
+}
+
+#chart br {
+    display: none;
+}
+
+#title {
+    text-align: center;
+    padding-top: 40px;
+    color:rgba(0, 64, 64, 0.6);
 }
 
 footer {
-    font-family: Roboto, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(74, 163, 163);
+    background-color: rgb(233, 255, 255);
     padding: 5px;
     margin: 20px auto 0;
     font-weight: 700;
-    box-shadow: 1px 1px 10px 2px rgb(74, 163, 163);
+    box-shadow: 5px 5px 15px rgba(0, 64, 64, 0.6);
 }
 
 footer p {
     margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    #chart br {
+        display: block;
+    }
 }
