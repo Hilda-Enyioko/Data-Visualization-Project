@@ -7,4 +7,5 @@ fetch('https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/maste
 .then(response => response.json())
 .then(data => {
     values = values.concat(data[0].data);
+    console.log(values);
 });
