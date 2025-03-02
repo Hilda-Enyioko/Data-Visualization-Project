@@ -26,6 +26,12 @@ body {
     color:rgba(0, 64, 64, 0.6);
 }
 
+#bar-chart {
+    width: 90%;
+    height: 80vh;
+    margin: 20px auto;
+}
+
 footer {
     display: flex;
     justify-content: center;
