@@ -8,5 +8,6 @@ req.open("GET", 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReference
 req.send();
 req.onload = () => {
     const json = JSON.parse(req.responseText);
-    console.log(json);
+    values = values.concat(json.data);
+    console.log("JSON: \n", json, "\nVALUES: \n", values);
 };
