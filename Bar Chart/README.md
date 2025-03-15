@@ -8,7 +8,7 @@ Build an interactive bar chart that meets the following user stories and passes 
 
 ## 🚀 Live Demo  
 
-[]  
+[LIVE DEMO](https://d3-usa-gdp-chart.netlify.app/)
 
 ## 📊 Features & User Stories  
 
