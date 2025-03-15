@@ -17,7 +17,7 @@ req.onload = () => {
 
 
 function drawBarChart() {
-    const barWidth = 5;
+    const barWidth = 0.5;
     const width = dataset.length * barWidth;
     const height = 500;
     const padding = 20;
