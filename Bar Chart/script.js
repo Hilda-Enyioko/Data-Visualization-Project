@@ -25,13 +25,15 @@ function drawBarChart() {
         const barWidth = width / dataset.length;
     
 
-    const xScale = d3.scaleTime()
+        const xScale = d3.scaleTime()
                      .domain([new Date(dataset[0][0]), new Date(dataset[dataset.length - 1][0])])
                      .range([padding, width]);
 
-    const yScale = d3.scaleLinear()
+        const yScale = d3.scaleLinear()
                      .domain([0, d3.max(dataset, d => d[1])])
                      .range([height - padding, padding]);
+
+        const maxGDP = d3.max(dataset, d => d[1]);
 
 const svgChart = d3.select(barChart)
                     .append('svg')
@@ -65,9 +67,13 @@ svgChart.selectAll('rect')
         // implement tooltip
         .on('mouseover', (event, d) => {
                 toolTip.style('display', 'block')
-                        .html(`Date: ${d[0]}<br>GDP: $${d[1]}Billion`)
+                        .html(`<p>Date: ${d[0]}</p>
+                                <p>GDP: $${d[1]}Billion</p>
+                        `)
                         .style('left', `${event.pageX + 10}px`)
                         .style('top', `${event.pageY - 30}px`);
+                
+                toolTip.attr('data-date', d => d[0]);
         })
         .on('mouseout', () => {
                 toolTip.style('display', 'none');
@@ -80,7 +86,8 @@ const xAxis = d3.axisBottom(xScale)
 
 const yAxis = d3.axisLeft(yScale)
                 .ticks(10)
-                .tickFormat(d3.format(".2s"));
+                .tickValues(d3.range(0, maxGDP, 2000))
+                .tickFormat(d3.format("d"));
                 
         
 svgChart.append('g')
