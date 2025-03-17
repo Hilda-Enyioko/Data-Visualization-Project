@@ -20,7 +20,7 @@ function drawBarChart() {
         const padding = 20;
         const height = 500;
 
-        const containerWidth = barChart.clientWidth();
+        const containerWidth = barChart.clientWidth;
         const width = containerWidth - (2 * padding);
         const barWidth = width / dataset.length;
     
@@ -39,6 +39,17 @@ const svgChart = d3.select(barChart)
                     .attr('height', height)
                     .attr('class', 'svg-chart');
 
+const toolTip = d3.select(barChart)
+                  .append('div')
+                  .attr('id', 'tooltip')
+                  .style('position', 'absolute')
+                  .style("color", "#000")
+                  .style('background', '#fff')
+                  .style("padding", "8px")
+                  .style("border-radius", "5px")
+                  .style("display", "none")
+                  .style("pointer-events", "none");
+
 svgChart.selectAll('rect')
         .data(dataset)
         .enter()
@@ -50,7 +61,17 @@ svgChart.selectAll('rect')
         .attr('data-gdp', d => d[1])
         .attr('x', d => xScale(new Date(d[0])) - barWidth / 2)
         .attr('y', d => yScale(d[1]))
-        .attr('fill', '#000080');
+        .attr('fill', '#000080')
+        // implement tooltip
+        .on('mouseover', (event, d) => {
+                toolTip.style('display', 'block')
+                        .html(`Date: ${d[0]}<br>GDP: $${d[1]}Billion`)
+                        .style('left', `${event.pageX + 10}px`)
+                        .style('top', `${event.pageY - 30}px`);
+        })
+        .on('mouseout', () => {
+                toolTip.style('display', 'none');
+        })
 
 
 const xAxis = d3.axisBottom(xScale)
@@ -58,7 +79,8 @@ const xAxis = d3.axisBottom(xScale)
                 .tickFormat(d3.timeFormat("%Y"));
 
 const yAxis = d3.axisLeft(yScale)
-                .ticks(10);
+                .ticks(10)
+                .tickFormat(d3.format(".2s"));
                 
         
 svgChart.append('g')
