@@ -67,8 +67,9 @@ svgChart.selectAll('rect')
         // implement tooltip
         .on('mouseover', (event, d) => {
                 toolTip.style('display', 'block')
-                        .html(`<p>Date: ${d[0]}</p>
-                                <p>GDP: $${d[1]}Billion</p>
+                        .html(`<p>Date: ${d[0]}
+                                <br>
+                                GDP: $${d[1]}Billion</p>
                         `)
                         .style('left', `${event.pageX + 10}px`)
                         .style('top', `${event.pageY - 30}px`);
