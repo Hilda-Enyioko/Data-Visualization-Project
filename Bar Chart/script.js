@@ -16,16 +16,18 @@ req.onload = () => {
 };
 
 
-
 function drawBarChart() {
-    const barWidth = 3;
-    const width = dataset.length * barWidth;
-    const height = 500;
-    const padding = 20;
+        const padding = 20;
+        const height = 500;
+
+        const containerWidth = barChart.clientWidth();
+        const width = containerWidth - (2 * padding);
+        const barWidth = width / dataset.length;
+    
 
     const xScale = d3.scaleTime()
                      .domain([new Date(dataset[0][0]), new Date(dataset[dataset.length - 1][0])])
-                     .range([padding, width - padding]);
+                     .range([padding, width]);
 
     const yScale = d3.scaleLinear()
                      .domain([0, d3.max(dataset, d => d[1])])
