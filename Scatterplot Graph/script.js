@@ -28,8 +28,8 @@ function plotGraph() {
     }
 
     const xScale = d3.scaleLinear()
-                     .domain([d3.min(dataset, d => d['Year']), d3.max(dataset, d => d['Year'])])
-                     .range([padding, width]);
+                     .domain([d3.min(dataset, d => d['Year']) - 1, d3.max(dataset, d => d['Year']) + 1])
+                     .range([padding, width - padding]);
 
     const yScale = d3.scaleTime()
                      .domain([
@@ -52,6 +52,18 @@ function plotGraph() {
                        .attr('width', width)
                        .attr('height', height)
                        .attr('id', 'svg-graph');
+
+    const toolTip = d3.select(scatterPlot)
+                      .append('div')
+                      .attr('id', 'tooltip')
+                      .style('position', 'absolute')
+                      .style('color', '#d0dod5')
+                      .style('background', '#0a0a23')
+                      .style('border-radius', '8px')
+                      .style('padding', '10px')
+                      .style('font-size', '11px')
+                      .style('display', 'none')
+                      .style('pointer-events', 'none');
     
     svgGraph.selectAll('circle')
             .data(dataset)
@@ -63,11 +75,29 @@ function plotGraph() {
             .attr('class', 'dot')
             .attr('fill', d => d.Doping ? 'red' : '#1b1b32')
             .attr('data-xvalue', d => d.Year)
-            .attr('data-yvalue', d => parseTime(d['Time']));
+            .attr('data-yvalue', d => parseTime(d['Time']))
+            //Add ToolTip
+            .on('mouseover', (event, d) => {
+                toolTip.style('display', 'block')
+                       .html(`${d.Name}: ${d.Nationality}
+                              <hr/>
+                              Year: ${d.Year}, Time: ${d.Time}
+                              <hr/>
+                              ${d.Doping}
+                        `)
+                        .style('left', `${event.pageX + 10}px`)
+                        .style('top', `${event.pageY - 30}px`);
+                
+                toolTip.attr('data-year', d => d.Year);
+            })
+            .on('mouseout', () => {
+                toolTip.style('display', 'none');
+            });
+
 
     const xAxis = d3.axisBottom(xScale)
                     .ticks(12)
-                    .tickFormat("d");
+                    .tickFormat(d3.format("d"));
     
     const yAxis = d3.axisLeft(yScale)
                     .ticks(12)

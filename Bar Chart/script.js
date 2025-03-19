@@ -5,6 +5,7 @@ let dataset = [];
 
 const req = new XMLHttpRequest();
 req.open("GET", 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json', true);
+
 req.send();
 
 req.onload = () => {
