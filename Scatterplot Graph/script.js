@@ -57,8 +57,8 @@ function plotGraph() {
                       .append('div')
                       .attr('id', 'tooltip')
                       .style('position', 'absolute')
-                      .style('color', '#d0dod5')
-                      .style('background', '#0a0a23')
+                      .style('color', '#0a0a23')
+                      .style('background', '#d0d0d5')
                       .style('border-radius', '8px')
                       .style('padding', '10px')
                       .style('font-size', '11px')
@@ -113,6 +113,37 @@ function plotGraph() {
             .attr("transform", `translate(${padding}, 0)`)
             .call(yAxis)
             .attr('id', 'y-axis');
+    
+    //Add Legend
+    const legendData = [
+        { label: 'Doping Allegations', 
+          color: 'red' 
+        },
+        { label: 'No Doping Allegations', 
+          color: '#1b1b32' 
+        }
+    ];
 
+    const legend = svgGraph.append('g')
+        .attr('id', 'legend')
+        .attr('transform', `translate(${width - padding - 200}, ${padding})`);
+
+    legend.selectAll('g')
+        .data(legendData)
+        .enter()
+        .append('g')
+        .attr('transform', (d, i) => `translate(0, ${i * 20})`)
+        .each(function(d) {
+            d3.select(this).append('rect')
+                .attr('width', 18)
+                .attr('height', 18)
+                .attr('fill', d.color);
+
+            d3.select(this).append('text')
+                .attr('x', 24)
+                .attr('y', 9)
+                .attr('dy', '0.35em')
+                .text(d.label);
+        });
 
 }
