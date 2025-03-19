@@ -126,7 +126,7 @@ function plotGraph() {
 
     const legend = svgGraph.append('g')
         .attr('id', 'legend')
-        .attr('transform', `translate(${width - padding - 200}, ${padding})`);
+        .attr('transform', `translate(${width - padding - 250}, ${2 * padding})`);
 
     legend.selectAll('g')
         .data(legendData)
@@ -135,14 +135,15 @@ function plotGraph() {
         .attr('transform', (d, i) => `translate(0, ${i * 20})`)
         .each(function(d) {
             d3.select(this).append('rect')
-                .attr('width', 18)
-                .attr('height', 18)
+                .attr('width', 10)
+                .attr('height', 10)
                 .attr('fill', d.color);
 
             d3.select(this).append('text')
                 .attr('x', 24)
                 .attr('y', 9)
                 .attr('dy', '0.35em')
+                .style('font-size', '12.5px')
                 .text(d.label);
         });
 
