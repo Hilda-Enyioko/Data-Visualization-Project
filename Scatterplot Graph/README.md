@@ -38,4 +38,4 @@ The dataset used is provided by FreeCodeCamp:
 [cyclist-data.json](https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json)
 
 ## Live Demo
-[View Live Demo](#)
+[View Live Demo](https://fcc-doping-in-bicycle-racing.netlify.app/)
