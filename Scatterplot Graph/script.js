@@ -110,7 +110,7 @@ function plotGraph() {
             .attr('id', 'x-axis');
                     
     svgGraph.append("g")
-            .attr("transform", `translate(0, 0)`)
+            .attr("transform", `translate(2 * padding, 0)`)
             .call(yAxis)
             .attr('id', 'y-axis');
     
@@ -126,7 +126,7 @@ function plotGraph() {
 
     const legend = svgGraph.append('g')
         .attr('id', 'legend')
-        .attr('transform', `translate(${width - padding}, ${height - padding - 100})`);
+        .attr('transform', `translate(${width - padding - 150}, ${height - padding - 100})`);
 
     legend.selectAll('g')
         .data(legendData)
