@@ -110,7 +110,7 @@ function plotGraph() {
             .attr('id', 'x-axis');
                     
     svgGraph.append("g")
-            .attr("transform", `translate(padding, 0)`)
+            .attr("transform", `translate(${padding}, 0)`)
             .call(yAxis)
             .attr('id', 'y-axis');
     
