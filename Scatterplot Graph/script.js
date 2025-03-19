@@ -19,7 +19,7 @@ req.onload = () => {
 function plotGraph() {
     
     const padding = 25;
-    const width = scatterPlot.clientWidth;
+    const width = scatterPlot.clientWidth || 800;
     const height = scatterPlot.clientHeight || 500;
 
     const parseTime = (timeString) => {
@@ -29,7 +29,7 @@ function plotGraph() {
 
     const xScale = d3.scaleLinear()
                      .domain([d3.min(dataset, d => d['Year']), d3.max(dataset, d => d['Year'])])
-                     .range([0, width]);
+                     .range([padding, width]);
 
     const yScale = d3.scaleTime()
                      .domain([
@@ -57,11 +57,31 @@ function plotGraph() {
             .data(dataset)
             .enter()
             .append('circle')
-            .attr('cx', d => d['Year'])
-            .attr('cy', d => height - padding - yScale(parseTime(d['Time'])))
+            .attr('cx', d => xScale(d['Year']))
+            .attr('cy', d => yScale(parseTime(d['Time'])))
             .attr('r', 5)
             .attr('class', 'dot')
-            .attr('fill', d => d.Doping ? 'red' : '#1b1b32');
+            .attr('fill', d => d.Doping ? 'red' : '#1b1b32')
+            .attr('data-xvalue', d => d.Year)
+            .attr('data-yvalue', d => parseTime(d['Time']));
+
+    const xAxis = d3.axisBottom(xScale)
+                    .ticks(12)
+                    .tickFormat("d");
+    
+    const yAxis = d3.axisLeft(yScale)
+                    .ticks(12)
+                    .tickFormat(d3.timeFormat("%M:%S"));
+    
+    svgGraph.append('g')
+            .attr("transform", `translate(0, ${height - padding})`)
+            .call(xAxis)
+            .attr('id', 'x-axis');
+                    
+    svgGraph.append("g")
+            .attr("transform", `translate(${padding}, 0)`)
+            .call(yAxis)
+            .attr('id', 'y-axis');
 
 
 }
