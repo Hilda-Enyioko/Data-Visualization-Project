@@ -63,7 +63,8 @@ function plotGraph() {
                       .style('padding', '10px')
                       .style('font-size', '11px')
                       .style('display', 'none')
-                      .style('pointer-events', 'none');
+                      .style('pointer-events', 'none')
+                      .style('transition', 'all 0.5s ease-in-out');
     
     svgGraph.selectAll('circle')
             .data(dataset)
