@@ -126,7 +126,7 @@ function plotGraph() {
 
     const legend = svgGraph.append('g')
         .attr('id', 'legend')
-        .attr('transform', `translate(${width - padding - 250}, ${2 * padding})`);
+        .attr('transform', `translate(${width - padding - 100}, ${height - padding - 100})`);
 
     legend.selectAll('g')
         .data(legendData)
@@ -141,7 +141,7 @@ function plotGraph() {
 
             d3.select(this).append('text')
                 .attr('x', 24)
-                .attr('y', 9)
+                .attr('y', 4)
                 .attr('dy', '0.35em')
                 .style('font-size', '12.5px')
                 .text(d.label);
