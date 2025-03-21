@@ -16,6 +16,20 @@ req.onload = () => {
     plotMap();
 }
 
-plotMap() {
+function plotMap() {
+
+    const padding = 40;
+    const width = (1.5 * heatMap.clientWidth);
+    const height = heatMap.clientWidth;
+
+    const svgMap = heatMap.append('svg')
+                          .attr('width', width)
+                          .attr('height', height)
+                          .attr('id', 'svg-map');
+    
+    svgMap.selectAll('rect')
+          .data(dataset)
+          .enter()
+          .append('rect');
 
 }
