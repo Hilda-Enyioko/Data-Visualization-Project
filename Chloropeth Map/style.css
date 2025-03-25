@@ -17,7 +17,7 @@ body {
 
 #map {
     background-color: #efefef;
-    width: 95%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,10 +36,9 @@ body {
     color: #1b1b32;
 }
 
-#heat-map {
-    width: 95%;
+#main-map {
+    width: 90%;
     height: 75vh;
-    overflow: scroll;
 }
 
 footer {
@@ -67,7 +66,7 @@ footer a:hover {
 
 @media screen and (max-width: 768px) {
     #map {
-        width: 97%;
+        width: 95%;
         padding: 10px;
     }
 
@@ -80,7 +79,7 @@ footer a:hover {
     }
 
     #heat-map {
-        width: 98%;
+        width: 95%;
         height: 65vh;
     }
 }
