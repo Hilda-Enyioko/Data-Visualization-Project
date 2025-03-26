@@ -30,7 +30,7 @@ function plotMap() {
     const maxMonth = d3.max(dataset, d => d.month);
 
     const cellWidth = (width - (2 * padding)) / (maxYear - minYear + 1);
-    const cellHeight = (height - padding) / (maxMonth - minMonth + 1);
+    const cellHeight = (height - (2 * padding)) / 12;
 
     //x-dcale for years
     const xScale = d3.scaleLinear()
@@ -68,6 +68,26 @@ function plotMap() {
           .attr('data-year', d => d.year)
           .attr('data-temp', d => (d.variance + baseTemp).toFixed(2))
           .attr('fill', d => colorScale(baseTemp + d.variance));
+
+    const xAxis = d3.axisBottom(xScale)
+                    .ticks(28)
+                    .tickFormat(d3.format('d'));
     
+    const yAxis = d3.axisLeft(yScale)
+                    .ticks(12)
+                    .tickFormat(d => {
+                        const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                        return month[d];
+                    });
+    
+    svgMap.append('g')
+          .attr("transform", `translate(0, ${height - padding})`)
+          .call(xAxis)
+          .attr('id', 'x-axis');
+            
+    svgMap.append("g")
+          .attr("transform", `translate(${padding}, 0)`)
+          .call(yAxis)
+          .attr('id', 'y-axis');
 
 }
