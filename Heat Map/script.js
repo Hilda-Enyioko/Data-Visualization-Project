@@ -43,7 +43,7 @@ function plotMap() {
                      .range([padding, height - padding]);
 
     // color scale for temperature
-    const colorScale = d3.scaleSequential(d3.interpolateRdYlB())
+    const colorScale = d3.scaleSequential(d3.interpolateRdYlBu())
                          .domain([d3.max(dataset, d => d.variance + baseTemp), d3.min(dataset, d => d.variance + baseTemp)]);
 
     const svgMap = d3.select(heatMap)
