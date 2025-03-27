@@ -89,7 +89,7 @@ function plotGraph() {
                         .style('left', `${event.pageX + 10}px`)
                         .style('top', `${event.pageY - 30}px`);
                 
-                toolTip.attr('data-year', d => d.Year);
+                toolTip.attr('data-year', d.Year);
             })
             .on('mouseout', () => {
                 toolTip.style('display', 'none');

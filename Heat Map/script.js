@@ -39,7 +39,7 @@ function plotMap() {
     
     // y-scale for months
     const yScale = d3.scaleBand()
-                     .domain(d3.range(12))
+                     .domain(d3.range(1, 13))
                      .range([padding, height - padding]);
 
     // color scale for temperature
@@ -89,9 +89,9 @@ function plotMap() {
                           <hr>
                           TEMP: ${baseTemp + d.variance}℃
                           <hr>
-                          TEMP-VARIANCe: ${d.variance}℃
+                          TEMP-VARIANCE: ${d.variance}℃
                         `)
-                   .attr('data-year', d => d.year);
+                   .attr('data-year', d.year);
           })
           .on('mouseout', () => {
             toolTip.style('display', 'none')
@@ -106,7 +106,7 @@ function plotMap() {
                     .tickFormat(d => {
                         const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
                         return month[d];
-                    });
+                    });             
     
     svgMap.append('g')
           .attr("transform", `translate(0, ${height - padding})`)
@@ -120,9 +120,71 @@ function plotMap() {
     
     svgMap.selectAll('#x-axis text')
           .style('font-size', window.innerWidth < 600 ? '8.5px' : '11px')
-          .style("text-anchor", window.innerWidth < 600 ? "end" : "middle")
-          .attr("dx", window.innerWidth < 600 ? "-5px" : "0")
-          .attr("dy", window.innerWidth < 600 ? "5px" : "0")
-          .attr("transform", window.innerWidth < 600 ? "rotate(-20)" : "none");
+          .attr("dx", "-5px")
+          .attr("dy", "5px")
+          .attr("transform", "rotate(-20)")
+          .style("text-anchor", "end");
+    
+    const legend = d3.select(heatMap)
+                     .append('g')
+                     .attr('id', 'legend');
+
+    const legendData = [
+      {
+            color: 'rgb(69, 117, 180)',
+            range: '2.8℃ - 3.9℃'
+      },
+      {
+            color: 'rgb(116, 173, 209)',
+            range: '3.9℃ - 5.0℃'
+      },
+      {
+            color: 'rgb(171, 217, 233)',
+            range: '5.0℃ - 6.1℃'
+      },
+      {
+            color: 'rgb(224, 243, 248)',
+            range: '6.1℃ - 7.2℃'
+      },
+      {
+            color: 'rgb(255, 255, 191)',
+            range: '7.2℃ - 8.1℃'
+      },
+      {
+            color: 'rgb(253, 174, 97)',
+            range: '8.1℃ - 9.5℃'
+      },
+      {
+            color: 'rgb(244, 109, 67)',
+            range: '9.5℃ - 10.6℃'
+      },
+      {
+            color: 'rgb(215, 48, 39)',
+            range: '10.6℃ - 11.7℃'
+      },
+      {
+            color: 'rgb(165, 0, 38)',
+            range: '11.7℃ - 12.8℃'
+      }
+    ]
+
+    legend.selectAll('g')
+          .data(legendData)
+          .enter()
+          .append('g')
+          .attr('transform', (d, i) => `translate(0, ${i * 20})`)
+          .each(function(d) {
+            d3.select(this).append('rect')
+                            .attr('width', 7.5)
+                            .attr('height', 7.5)
+                            .attr('fill', d.color);
+            
+                        d3.select(this).append('text')
+                            .attr('x', 24)
+                            .attr('y', 4)
+                            .attr('dy', '0.35em')
+                            .style('font-size', '11px')
+                            .text(d.range);
+          })
 
 }
