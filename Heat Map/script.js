@@ -39,7 +39,7 @@ function plotMap() {
     
     // y-scale for months
     const yScale = d3.scaleBand()
-                     .domain(d3.range(1, 13))
+                     .domain(d3.range(13))
                      .range([padding, height - padding]);
 
     // color scale for temperature
