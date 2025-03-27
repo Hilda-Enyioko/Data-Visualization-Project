@@ -87,9 +87,11 @@ function plotMap() {
                    .style('top', `${event.pageY + 10}px`)
                    .html(`${d.year} - ${month[d.month - 1]}
                           <hr>
-                          ${baseTemp + d.variance}
-                          ${d.variance}
+                          TEMP: ${baseTemp + d.variance}℃
+                          <hr>
+                          TEMP-VARIANCe: ${d.variance}℃
                         `)
+                   .attr('data-year', d => d.year);
           })
           .on('mouseout', () => {
             toolTip.style('display', 'none')
@@ -118,7 +120,7 @@ function plotMap() {
     
     svgMap.selectAll('#x-axis text')
           .style('font-size', window.innerWidth < 600 ? '8.5px' : '11px')
-          .style("text-anchor", window.innerWidth < 600 ? "end" : "start")
+          .style("text-anchor", window.innerWidth < 600 ? "end" : "middle")
           .attr("dx", window.innerWidth < 600 ? "-5px" : "0")
           .attr("dy", window.innerWidth < 600 ? "5px" : "0")
           .attr("transform", window.innerWidth < 600 ? "rotate(-20)" : "none");
