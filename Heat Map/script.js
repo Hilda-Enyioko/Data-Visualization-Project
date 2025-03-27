@@ -54,6 +54,18 @@ function plotMap() {
                      .attr('width', width)
                      .attr('height', height)
                      .attr('id', 'svg-map');
+
+    const toolTip = d3.select(heatMap)
+                     .append('div')
+                     .attr('id', 'tooltip')
+                     .style('position', 'absolute')
+                     .style('background', '#d0d0d5')
+                     .style('color', '#0a0a23')
+                     .style('border-radius', '8px')
+                     .style('font-size', '11px')
+                     .style('padding', '10px')
+                     .style('display', 'none')
+                     .style('cursor', 'pointer');
     
     svgMap.selectAll('rect')
           .data(dataset)
@@ -67,7 +79,21 @@ function plotMap() {
           .attr('data-month', d => d.month)
           .attr('data-year', d => d.year)
           .attr('data-temp', d => (d.variance + baseTemp).toFixed(2))
-          .attr('fill', d => colorScale(baseTemp + d.variance));
+          .attr('fill', d => colorScale(baseTemp + d.variance))
+          .on('mouseover', (event, d) => {
+            const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            toolTip.style('display', 'block')
+                   .style('left', `${event.pageX + 10}px`)
+                   .style('top', `${event.pageY + 10}px`)
+                   .html(`${d.year} - ${month[d.month - 1]}
+                          <hr>
+                          ${baseTemp + d.variance}
+                          ${d.variance}
+                        `)
+          })
+          .on('mouseout', () => {
+            toolTip.style('display', 'none')
+          });
 
     const xAxis = d3.axisBottom(xScale)
                     .ticks(28)
@@ -91,6 +117,10 @@ function plotMap() {
           .attr('id', 'y-axis');
     
     svgMap.selectAll('#x-axis text')
-          .style('font-size', svgMap.innerWidth < 600 ? '8.5px' : '11px');
+          .style('font-size', window.innerWidth < 600 ? '8.5px' : '11px')
+          .style("text-anchor", window.innerWidth < 600 ? "end" : "start")
+          .attr("dx", window.innerWidth < 600 ? "-5px" : "0")
+          .attr("dy", window.innerWidth < 600 ? "5px" : "0")
+          .attr("transform", window.innerWidth < 600 ? "rotate(-20)" : "none");
 
 }

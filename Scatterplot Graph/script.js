@@ -18,7 +18,7 @@ req.onload = () => {
 
 function plotGraph() {
     
-    const padding = 25;
+    const padding = 40;
     const width = scatterPlot.clientWidth || 800;
     const height = scatterPlot.clientHeight || 500;
 
