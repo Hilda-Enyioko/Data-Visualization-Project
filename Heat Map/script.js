@@ -127,7 +127,8 @@ function plotMap() {
     
     const legend = d3.select(heatMap)
                      .append('g')
-                     .attr('id', 'legend');
+                     .attr('id', 'legend')
+                     .attr('transform', `translate(${width - padding - 150}, ${height - padding})`);
 
     const legendData = [
       {
