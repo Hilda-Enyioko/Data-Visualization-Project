@@ -90,7 +90,7 @@ function plotMap() {
           .call(yAxis)
           .attr('id', 'y-axis');
     
-    svgMap.selectAll('#y-axis text')
-          .style('font-size', svgMap.innerWidth < 600 ? '10px' : '12px');
+    svgMap.selectAll('#x-axis text')
+          .style('font-size', svgMap.innerWidth < 600 ? '8.5px' : '11px');
 
 }
