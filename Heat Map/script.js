@@ -20,7 +20,7 @@ req.onload = () => {
 function plotMap() {
 
     const padding = 40;
-    const width = (1.8 * heatMap.clientWidth);
+    const width = (2 * heatMap.clientWidth);
     const height = heatMap.clientWidth;
 
     const minYear = d3.min(dataset, d => d.year);
