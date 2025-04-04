@@ -127,7 +127,7 @@ function plotMap() {
     
     const legend = svgMap.append('g')
                          .attr('id', 'legend')
-                         .attr('transform', `translate(${width - padding - 150}, ${height - padding})`);
+                         .attr('transform', `translate(${padding}, ${height - (2 * padding)})`);
 
     const legendData = [
       {
@@ -178,13 +178,13 @@ function plotMap() {
      legendItem.append('rect')
                .attr('width', 7.5)
                .attr('height', 7.5)
-               .attr('fill', (d) => d.color);
+               .attr('fill', d => d.color);
             
      legendItem.append('text')
                .attr('x', 24)
                .attr('y', 4)
                .attr('dy', '0.35em')
                .style('font-size', '11px')
-               .text(d.range);
+               .text(d => d.range);
 
 }
