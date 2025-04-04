@@ -125,10 +125,9 @@ function plotMap() {
           .attr("transform", "rotate(-20)")
           .style("text-anchor", "end");
     
-    const legend = d3.select(heatMap)
-                     .append('g')
-                     .attr('id', 'legend')
-                     .attr('transform', `translate(${width - padding - 150}, ${height - padding})`);
+    const legend = svgMap.append('g')
+                         .attr('id', 'legend')
+                         .attr('transform', `translate(${width - padding - 150}, ${height - padding})`);
 
     const legendData = [
       {
@@ -169,23 +168,23 @@ function plotMap() {
       }
     ]
 
-    legend.selectAll('g')
-          .data(legendData)
-          .enter()
-          .append('g')
-          .attr('transform', (d, i) => `translate(0, ${i * 20})`)
-          .each(function(d) {
-            d3.select(this).append('rect')
-                            .attr('width', 7.5)
-                            .attr('height', 7.5)
-                            .attr('fill', d.color);
+    const legendItem = legend.selectAll('g')
+                              .data(legendData)
+                              .enter()
+                              .append('g')
+                              .attr('transform', (d, i) => `translate(0, ${i * 20})`);
+
+
+     legendItem.append('rect')
+               .attr('width', 7.5)
+               .attr('height', 7.5)
+               .attr('fill', (d) => d.color);
             
-                        d3.select(this).append('text')
-                            .attr('x', 24)
-                            .attr('y', 4)
-                            .attr('dy', '0.35em')
-                            .style('font-size', '11px')
-                            .text(d.range);
-          })
+     legendItem.append('text')
+               .attr('x', 24)
+               .attr('y', 4)
+               .attr('dy', '0.35em')
+               .style('font-size', '11px')
+               .text(d.range);
 
 }
