@@ -127,7 +127,7 @@ function plotMap() {
     
     const legend = svgMap.append('g')
                          .attr('id', 'legend')
-                         .attr('transform', `translate(${padding}, ${height + padding})`);
+                         .attr('transform', `translate(${width - (2 * padding)}, ${height - (4 * padding)})`);
 
     const legendData = [
       {
