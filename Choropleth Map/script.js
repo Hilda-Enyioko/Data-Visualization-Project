@@ -91,7 +91,7 @@ function plotMap() {
 
         const legend = svg.append('g')
                           .attr('id', 'legend')
-                          .attr('transform', `translate(${mapWidth - (2 * padding)}, ${padding})`);
+                          .attr('transform', `translate(${mapWidth - (2 * padding)}, ${padding / 2})`);
         
         legend.selectAll('rect')
               .data(colorScale.range())
@@ -99,7 +99,7 @@ function plotMap() {
               .append('rect')
               .attr('x', (d, i) => i * 16)
               .attr('y', 0)
-              .attr('width', 16)
+              .attr('width', 24)
               .attr('height', 8)
               .attr('fill', d => d);
         
@@ -107,7 +107,7 @@ function plotMap() {
                 .data(colorScale.range())
                 .enter()
                 .append('text')
-                .attr('x', (d, i) => i * 16 + 8)
+                .attr('x', (d, i) => i * 24 + 8)
                 .attr('y', 20)
                 .attr('text-anchor', 'middle')
                 .text((d, i) => {
