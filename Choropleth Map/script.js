@@ -24,6 +24,18 @@ function plotMap() {
     const mapWidth = mainMap.clientWidth;
     const mapHeight = mainMap.clientHeight;
 
+    const getEducationByFips = (fips) => {
+        const data = educationData.find(d => d.fips === fips);
+        return data ? data : null;
+    }
+
+    const colorScale = d3.scaleQuantize()
+    .domain([
+        d3.min(educationData, d => d.bachelorsOrHigher),
+        d3.max(educationData, d => d.bachelorsOrHigher)
+    ])
+    .range(d3.schemeBlues[9]);
+
     const svg = d3.select(mainMap)
         .append('svg')
         .attr('width', mapWidth + (2 * padding))
@@ -39,7 +51,15 @@ function plotMap() {
         .append('path')
         .attr('d', path)
         .attr('class', 'county')
-        .attr('fill', 'lightgray')
-        .attr('stroke', 'white');
-
+        .attr('fill', d => {
+            const education = getEducationByFips(d.id);
+            return education ? colorScale(education.bachelorsOrHigher) : '#ccc';
+        })
+        .attr('stroke', 'white')
+        .attr('data.fips', d => d.id)
+        .attr('data-education', d => {
+            const education = getEducationByFips(d.id);
+            return education ? education.bachelorsOrHigher : null;
+        });
+    
 }
