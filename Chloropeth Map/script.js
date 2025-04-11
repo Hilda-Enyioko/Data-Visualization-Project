@@ -31,7 +31,14 @@ function plotMap() {
         .attr('id', 'svg-map');
     
     const path = d3.geoPath();
-    console.log('PATH:', path);
 
+    svg.selectAll('path')
+        .data(countyData)
+        .enter()
+        .append('path')
+        .attr('d', path)
+        .attr('class', 'county')
+        .attr('fill', 'lightgray')
+        .attr('stroke', 'white');
 
 }
