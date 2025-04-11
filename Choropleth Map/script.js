@@ -48,13 +48,14 @@ function plotMap() {
                      .attr('id', 'tooltip')
                      .style('position', 'absolute')
                      .style('color', '#0a0a23')
-                     .style('background-color', '#fff')
+                     .style('background-color', '#d0d0d5')
                      .style('padding', '5px')
                      .style('font-size', '11px')
                      .style('border-radius', '5px')
                      .style('opacity', 0)
                      .style('pointer-events', 'none')
-                     .style('transition', 'all 0.5s ease-in-out');;
+                     .style('cursor', 'pointer')
+                     .style('transition', 'all 0.5s ease-in-out');
     
     const path = d3.geoPath();
 
@@ -77,12 +78,12 @@ function plotMap() {
         .on('mouseover', (event, d) => {
             const education = getEducationByFips(d.id);
             toolTip.style('opacity', 1)
-                    .html(`${education.area_name}
+                   .style('left', (event.pageX + 10) + 'px')
+                   .style('top', (event.pageY - 30) + 'px')
+                   .html(`${education.area_name}
                           <hr/>
                           ${education.state}: ${education.bachelorsOrHigher}%`)
-                   .style('left', (event.pageX + 10) + 'px')
-                   .style('top', (event.pageY - 30) + 'px');
-            toolTip.attr('data-education', education.bachelorsOrHigher)
+                   .attr('data-education', education.bachelorsOrHigher)
         })
         .on('mouseout', () => {
             toolTip.style('opacity', 0);
