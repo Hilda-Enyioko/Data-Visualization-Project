@@ -80,7 +80,7 @@ function plotGraph() {
             //Add ToolTip
             .on('mouseover', (event, d) => {
                 toolTip.style('display', 'block')
-                       .html(`)${d.Name}: ${d.Nationality}
+                       .html(`${d.Name}: ${d.Nationality}
                               <hr/>
                               Year: ${d.Year}, Time: ${d.Time}
                               <hr/>

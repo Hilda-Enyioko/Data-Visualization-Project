@@ -42,6 +42,19 @@ function plotMap() {
         .attr('height', mapHeight + (2 * padding))
         .attr('id', 'svg-map')
         .attr('transform', `translate(${padding}, ${padding})`);
+
+    const toolTip = d3.select(mainMap)
+                     .append('div')
+                     .attr('id', 'tooltip')
+                     .style('position', 'absolute')
+                     .style('color', '#0a0a23')
+                     .style('background-color', '#fff')
+                     .style('padding', '5px')
+                     .style('font-size', '11px')
+                     .style('border-radius', '5px')
+                     .style('opacity', 0)
+                     .style('pointer-events', 'none')
+                     .style('transition', 'all 0.5s ease-in-out');;
     
     const path = d3.geoPath();
 
@@ -56,10 +69,24 @@ function plotMap() {
             return education ? colorScale(education.bachelorsOrHigher) : '#ccc';
         })
         .attr('stroke', 'white')
-        .attr('data.fips', d => d.id)
+        .attr('data-fips', d => d.id)
         .attr('data-education', d => {
             const education = getEducationByFips(d.id);
             return education ? education.bachelorsOrHigher : null;
+        })
+        .on('mouseover', (event, d) => {
+            const education = getEducationByFips(d.id);
+            toolTip.style('opacity', 1)
+                    .html(`${education.area_name}
+                          <hr/>
+                          ${education.state}: ${education.bachelorsOrHigher}%`)
+                   .style('left', (event.pageX + 10) + 'px')
+                   .style('top', (event.pageY - 30) + 'px');
+            toolTip.attr('data-education', education.bachelorsOrHigher)
+        })
+        .on('mouseout', () => {
+            toolTip.style('opacity', 0);
         });
+
     
 }
