@@ -89,5 +89,39 @@ function plotMap() {
             toolTip.style('opacity', 0);
         });
 
+        const legend = svg.append('g')
+                          .attr('id', 'legend')
+                          .attr('transform', `translate(${mapWidth - (2 * padding)}, ${padding})`);
+        
+        legend.selectAll('rect')
+              .data(colorScale.range())
+              .enter()
+              .append('rect')
+              .attr('x', (d, i) => i * 16)
+              .attr('y', 0)
+              .attr('width', 16)
+              .attr('height', 8)
+              .attr('fill', d => d);
+        
+        legend.selectAll('text')
+                .data(colorScale.range())
+                .enter()
+                .append('text')
+                .attr('x', (d, i) => i * 16 + 8)
+                .attr('y', 20)
+                .attr('text-anchor', 'middle')
+                .text((d, i) => {
+                    const domain = colorScale.invertExtent(d);
+                    return `${Math.round(domain[0])}% - ${Math.round(domain[1])}%`;
+                });
     
+        legend.call(d3.axisBottom(colorScale.copy().domain([0, 100]))
+                .ticks(8)
+                .tickFormat(d => d + '%')
+                .tickSize(0))
+              .attr('transform', `translate(0, 30)`)
+              .attr('id', 'legend-axis')
+              .attr('font-size', '10px')
+              .attr('font-family', 'Arial, sans-serif')
+              .attr('fill', '#000');
 }
