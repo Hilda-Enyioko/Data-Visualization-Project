@@ -91,7 +91,7 @@ function plotMap() {
 
         const legend = svg.append('g')
                           .attr('id', 'legend')
-                          .attr('transform', `translate(${mapWidth - (3 * padding)}, 20)`);
+                          .attr('transform', `translate(${mapWidth / 2}, 20)`);
         
         legend.selectAll('rect')
               .data(colorScale.range())
@@ -110,6 +110,7 @@ function plotMap() {
                 .attr('x', (d, i) => i * 35)
                 .attr('y', 20)
                 .attr('text-anchor', 'start')
+                .style('font-size', '11px')
                 .text((d, i) => {
                     const domain = colorScale.invertExtent(d);
                     return `${Math.round(domain[0])}%`;
