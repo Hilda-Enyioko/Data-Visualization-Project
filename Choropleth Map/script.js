@@ -26,8 +26,8 @@ function plotMap() {
 
     const svg = d3.select(mainMap)
         .append('svg')
-        .attr('width', mapWidth)
-        .attr('height', mapHeight)
+        .attr('width', (mapWidth - (2 * padding)))
+        .attr('height', (mapHeight - (2 * padding)))
         .attr('id', 'svg-map');
     
     const path = d3.geoPath();
