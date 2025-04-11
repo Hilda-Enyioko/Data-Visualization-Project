@@ -20,7 +20,7 @@ Promise.all([
 })
 
 function plotMap() {
-    const padding = 120;
+    const padding = 60;
     const mapWidth = mainMap.clientWidth;
     const mapHeight = mainMap.clientHeight;
 
