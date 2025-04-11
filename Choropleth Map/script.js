@@ -91,7 +91,7 @@ function plotMap() {
 
         const legend = svg.append('g')
                           .attr('id', 'legend')
-                          .attr('transform', `translate(${mapWidth - (2 * padding)}, 30)`);
+                          .attr('transform', `translate(${mapWidth - (3 * padding)}, 20)`);
         
         legend.selectAll('rect')
               .data(colorScale.range())
@@ -115,11 +115,11 @@ function plotMap() {
                     return `${Math.round(domain[0])}%`;
                 });
     
-        // legend.call(
-        //     d3.axisBottom(x)
-        //       .tickSize(13)
-        //       .tickFormat((x) => {
-        //       return Math.round(x) + '%';
-        //     })
-        //     .tickValues(color.domain()))
+        legend.call(
+            d3.axisBottom(x)
+              .tickSize(13)
+              .tickFormat((x) => {
+              return Math.round(x) + '%';
+            })
+            .tickValues(colorScale.domain()))
 }
