@@ -39,6 +39,8 @@ body {
 #main-map {
     width: 90%;
     height: 75vh;
+    overflow: scroll;
+    padding: 0 30px;
 }
 
 footer {
