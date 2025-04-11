@@ -99,20 +99,20 @@ function plotMap() {
               .append('rect')
               .attr('x', (d, i) => i * 16)
               .attr('y', 0)
-              .attr('width', 24)
-              .attr('height', 8)
+              .attr('width', 35)
+              .attr('height', 10)
               .attr('fill', d => d);
         
         legend.selectAll('text')
                 .data(colorScale.range())
                 .enter()
                 .append('text')
-                .attr('x', (d, i) => i * 24 + 8)
+                .attr('x', (d, i) => i * 35)
                 .attr('y', 20)
-                .attr('text-anchor', 'middle')
+                .attr('text-anchor', 'start')
                 .text((d, i) => {
                     const domain = colorScale.invertExtent(d);
-                    return `${Math.round(domain[0])}% - ${Math.round(domain[1])}%`;
+                    return `${Math.round(domain[0])}%`;
                 });
     
         legend.call(d3.axisBottom(colorScale.copy().domain([0, 100]))
