@@ -1,4 +1,4 @@
-import { feature } from 'topojson-client';
+import { feature } from "https://cdn.jsdelivr.net/npm/topojson-client@3/+esm";
 
 const mainMap = document.getElementById('main-map');
 const topoJSON = "https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json";
