@@ -1,7 +1,37 @@
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { feature } from 'topojson-client';
 
 const mainMap = document.getElementById('main-map');
-const countyDataUrl = "https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json";
-const educationDataUrl = "https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json";
+const topoJSON = "https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json";
+const educationJSON = "https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json";
 
-let dataset = [];
+let educationData = [];
+let countyData = [];
+
+Promise.all([
+    fetch(topoJSON).then(response => response.json()),
+    fetch(educationJSON).then(response => response.json())
+])
+.then(([countyTopo, education]) => {
+    educationData = education;
+    countyData = feature(countyTopo, countyTopo.objects.counties).features;
+    console.log('EDUCATION DATA:\n', educationData, "\nCOUNTY DATA:\n", countyData);
+
+    plotMap();
+})
+
+function plotMap() {
+    const padding = 120;
+    const mapWidth = mainMap.clientWidth;
+    const mapHeight = mainMap.clientHeight;
+
+    const svg = d3.select(mainMap)
+        .append('svg')
+        .attr('width', mapWidth)
+        .attr('height', mapHeight)
+        .attr('id', 'svg-map');
+    
+    const path = d3.geoPath();
+    console.log('PATH:', path);
+
+
+}

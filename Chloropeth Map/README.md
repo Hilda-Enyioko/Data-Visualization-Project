@@ -1,7 +1,7 @@
 # Choropleth Map Project
 
 ## Overview
-This project is a choropleth map that visualizes U.S. education data, fulfilling the requirements outlined by the [FreeCodeCamp Data Visualization Certification](https://www.freecodecamp.org/learn). The map displays the percentage of adults aged 25 and older who have earned a bachelor's degree or higher, categorized by county.
+This project is a choropleth map that visualizes U.S. education data, fulfilling the requirements outlined by the [FreeCodeCamp Data Visualization Certification](https://www.freecodecamp.org/learn/data-visualization/data-visualization-projects/visualize-data-with-a-choropleth-map). The map displays the percentage of adults aged 25 and older who have earned a bachelor's degree or higher, categorized by county.
 
 ## Features
 - 📍 **Choropleth Map:** A visual representation of U.S. counties colored based on education levels.
@@ -29,8 +29,8 @@ This project is a choropleth map that visualizes U.S. education data, fulfilling
 - **D3.js** (for SVG-based visualization)
 
 ## Datasets Used
-- [U.S. Education Data](https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json)
-- [U.S. County Data](https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json)
+- [Dataset: U.S. Education Data](https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json)
+- [TopoJSON: U.S. County Data](https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json)
 
 ## Testing
 You can test the project using FreeCodeCamp's test suite by including the following CDN in your HTML file:
