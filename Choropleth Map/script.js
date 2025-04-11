@@ -115,12 +115,5 @@ function plotMap() {
                     const domain = colorScale.invertExtent(d);
                     return `${Math.round(domain[0])}%`;
                 });
-    
-        legend.call(
-            d3.axisBottom(x)
-              .tickSize(13)
-              .tickFormat((x) => {
-              return Math.round(x) + '%';
-            })
-            .tickValues(colorScale.domain()))
+
 }
