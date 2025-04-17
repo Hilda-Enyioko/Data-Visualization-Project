@@ -39,4 +39,4 @@ You can test the project using FreeCodeCamp's test suite by including the follow
 ```
 
 ## Live Demo
-You can view the working project [here](your-live-demo-link).
+You can view the working project [here](https://fcc-us-educational-attainment.netlify.app/).

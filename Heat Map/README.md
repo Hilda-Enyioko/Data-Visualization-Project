@@ -27,4 +27,4 @@ The project uses the global temperature dataset from freeCodeCamp:
 [Global Temperature Data](https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json)
 
 ## Live Demo
-[View Live Demo](##)
+[View Live Demo](https://fcc-monthy-global-land-temperature.netlify.app/)
