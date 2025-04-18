@@ -27,7 +27,7 @@ body {
 
 #header {
     display: flex;
-    width: 98%;
+    width: 95%;
     align-items: center;
     justify-content: center;
 }
@@ -55,7 +55,7 @@ body {
 }
 
 #tree-map {
-    width: 98%;
+    width: 95%;
     overflow-x: scroll;
     padding: 0 30px;
 }
@@ -81,6 +81,11 @@ footer a {
 footer a:hover {
     color: #3b3b4f;
     text-decoration: underline;
+}
+
+.tile {
+    border: 1px solid #efefef;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 768px) {

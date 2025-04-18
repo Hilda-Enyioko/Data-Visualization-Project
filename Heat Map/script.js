@@ -32,7 +32,7 @@ function plotMap() {
     const cellWidth = (width - (2 * padding)) / (maxYear - minYear + 1);
     const cellHeight = (height - (2 * padding)) / 12;
 
-    //x-dcale for years
+    //x-scale for years
     const xScale = d3.scaleLinear()
                      .domain([minYear, maxYear])
                      .range([padding, width - padding]);
