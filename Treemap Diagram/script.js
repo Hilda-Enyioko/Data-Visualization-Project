@@ -25,7 +25,7 @@ dropdown.addEventListener("change", function() {
 
     const selectedHeading = heading[dropdownValue];
 
-    document.getElementById("heading").textContent = selectedHeading["title"];
+    document.getElementById("title").textContent = selectedHeading["title"];
     document.getElementById("description").textContent = selectedHeading["description"];
 
     treemap.innerHTML = "";
