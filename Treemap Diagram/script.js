@@ -17,10 +17,16 @@ const heading = [
     }
 ];
 
+const headingMap = {
+    "default": 0,
+    "video-game": 1,
+    "movie": 2
+}
+
 dropdown.addEventListener("change", function() {
     dropdownValue = dropdown.value;
     console.log(dropdownValue);
-    const selectedHeading = heading[dropdownValue];
+    const selectedHeading = heading[headingMap[dropdownValue]];
     document.getElementById("heading").textContent = selectedHeading.title;
     document.getElementById("description").textContent = selectedHeading.description;
     treemap.innerHTML = "";
