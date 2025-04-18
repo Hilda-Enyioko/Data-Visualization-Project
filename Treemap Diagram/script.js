@@ -1,4 +1,5 @@
-const dropdown = document.getElementById("dropdown");
+window.onload = function() {
+    const dropdown = document.getElementById("dropdown");
 const treemap = document.getElementById("treemap");
 let dropdownValue = "";
 let dataset = [];
@@ -86,7 +87,6 @@ function drawTreemap() {
                         .style('pointer-events', 'none');
 
     const tile = svgMap.selectAll('rect')
-                       .attr('class', 'tile')
                        .data(root.leaves())
                        .enter()
                        .append('rect')
@@ -97,7 +97,8 @@ function drawTreemap() {
                        .attr('fill',  d => colorScale(d.data.category))
                        .attr('data-name', d => d.data.name)
                        .attr('data-category', d => d.data.category)
-                       .attr('data-value', d => d.data.value);
+                       .attr('data-value', d => d.data.value)
+                       .attr('class', 'tile');
     
     tile.on('mouseover', function (event, d) {
         d3.select(this).attr('fill', '#ededff');
@@ -119,7 +120,6 @@ function drawTreemap() {
     });
     
     svgMap.selectAll('text')
-          .attr('class', 'tile-label')
           .data(root.leaves())
           .enter()
           .append('text')
@@ -127,12 +127,11 @@ function drawTreemap() {
           .attr('x', d => d.x0 + 5)
           .attr('y', d => d.y0 + 7)
           .attr('font-size', '10px')
-          .attr('fill', 'black');
+          .attr('fill', 'black')        
+          .attr('class', 'tile-label');
 
-}
+};
 
-
-window.onload = function() {
     dropdown.value = 'default';
     dropdown.dispatchEvent(new Event('change'));
 }
