@@ -25,9 +25,28 @@ body {
     box-shadow: 5px 5px 15px #3a3a42;
 }
 
+#header {
+    display: flex;
+    width: 98%;
+    align-items: center;
+    justify-content: center;
+}
+
+#dropdown {
+    height: 38px;
+    border: 2px solid #0a0a23;
+    padding: 7px 15px;
+    border-radius: 8px;
+    background-color: #f5f6f7;
+    align-self: flex-end;
+    position: absolute;
+    right: 5%;
+}
+
 #heading {
     color: #0a0a23;
     text-align: center;
+    justify-self: center;
 }
 
 #description {
@@ -68,6 +87,18 @@ footer a:hover {
     #map {
         width: 100%;
         padding: 20px;
+    }
+
+    #header {
+        flex-direction: column;
+    }
+
+    #dropdown {
+        position: static;
+        height: 33px;
+        margin: 10px auto;
+        padding: 5px 10px;
+        font-size: 11px;
     }
 
     #title {
