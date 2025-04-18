@@ -19,6 +19,7 @@ const heading = [
 
 dropdown.addEventListener("change", function() {
     dropdownValue = dropdown.value;
+    console.log(dropdownValue);
     const selectedHeading = heading[dropdownValue];
     document.getElementById("heading").textContent = selectedHeading.title;
     document.getElementById("description").textContent = selectedHeading.description;
