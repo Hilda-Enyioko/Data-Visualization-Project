@@ -21,7 +21,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding:  25px 20px;
+    padding:  30px 20px;
     box-shadow: 5px 5px 15px #3a3a42;
 }
 
@@ -67,7 +67,7 @@ footer a:hover {
 @media screen and (max-width: 768px) {
     #map {
         width: 100%;
-        padding: 10px;
+        padding: 20px;
     }
 
     #title {
