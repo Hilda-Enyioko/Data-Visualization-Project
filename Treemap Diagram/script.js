@@ -1,10 +1,10 @@
 window.onload = function() {
     const dropdown = document.getElementById("dropdown");
-const treemap = document.getElementById("treemap");
-let dropdownValue = "";
-let dataset = [];
+    const treemap = document.getElementById("tree-map");
+    let dropdownValue = "";
+    let dataset = [];
 
-const heading = {
+    const heading = {
     "default": {
         "title": "Kickstarter Pledges",
         "description": "Top 100 Most Pledged Kickstarter Campaigns Grouped By Category",
@@ -32,6 +32,7 @@ dropdown.addEventListener("change", function() {
 
     document.getElementById("title").textContent = selectedHeading["title"];
     document.getElementById("description").textContent = selectedHeading["description"];
+
 
     treemap.innerHTML = "";
 
