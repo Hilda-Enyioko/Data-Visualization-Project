@@ -33,27 +33,46 @@ dropdown.addEventListener("change", function() {
     document.getElementById("title").textContent = selectedHeading["title"];
     document.getElementById("description").textContent = selectedHeading["description"];
 
-
-    treemap.innerHTML = "";
-
     fetch(selectedHeading["json"])
     .then(response => response.json())
     .then(data => {
         dataset = data;
 
-        drawTreemap();
+        updateTreemap();
     });
 });
 
-function drawTreemap() {
+// svg dimensions
+const mapWidth = treemap.clientWidth;
+const mapHeight = 500;
+const padding = 50;
+
+
+//svg
+const svgMap = d3.select(treemap)
+                 .append('svg')
+                 .attr('id', 'svg-map')
+                 .attr('width', mapWidth)
+                 .attr('height', mapHeight + (2 * padding));               
+
+//Tooltip                 
+const toolTip = d3.select(treemap)
+                  .append('div')
+                  .attr('id', 'tooltip')
+                  .style('position', 'absolute')
+                  .style('background', '#efefef')
+                  .style('padding', '8px')
+                  .style('border-radius', '8px')
+                  .style('font-size', '11px')
+                  .style('color', '#0a0a23')
+                  .style('display', 'none')
+                  .style('pointer-events', 'none');
+
+function updateTreemap() {
 
     const root = d3.hierarchy(dataset)
                    .sum(d => d.value)
                    .sort((a, b) => b.value - a.value);
-
-    const mapWidth = treemap.clientWidth;
-    const mapHeight = 500;
-    const padding = 50;
 
     const categories = root.leaves().map(d => d.data.category);
     const uniqueCategories = [...new Set(categories)];
@@ -68,38 +87,38 @@ function drawTreemap() {
                             .padding(1);
     
     treemapLayout(root);
-    
-    const svgMap = d3.select(treemap)
-                     .append('svg')
-                     .attr('id', 'svg-map')
-                     .attr('width', mapWidth)
-                     .attr('height', mapHeight + (2 * padding));               
-    
-    const toolTip = d3.select(treemap)
-                        .append('div')
-                        .attr('id', 'tooltip')
-                        .style('position', 'absolute')
-                        .style('background', '#efefef')
-                        .style('padding', '8px')
-                        .style('border-radius', '8px')
-                        .style('font-size', '11px')
-                        .style('color', '#0a0a23')
-                        .style('display', 'none')
-                        .style('pointer-events', 'none');
 
+    d3.select('#svg-map').remove();
+    const svgMap = d3.select(treemap)
+                 .append('svg')
+                 .attr('id', 'svg-map')
+                 .attr('width', mapWidth)
+                 .attr('height', mapHeight + (2 * padding)); 
+
+
+    // Tree Map Tiles                    
     const tile = svgMap.selectAll('rect')
-                       .data(root.leaves())
-                       .enter()
-                       .append('rect')
-                       .attr('x', d => d.x0)
-                       .attr('y', d => d.y0)
-                       .attr('width', d => d.x1 - d.x0)
-                       .attr('height', d => d.y1 - d.y0)
-                       .attr('fill',  d => colorScale(d.data.category))
-                       .attr('data-name', d => d.data.name)
-                       .attr('data-category', d => d.data.category)
-                       .attr('data-value', d => d.data.value)
-                       .attr('class', 'tile');
+                       .data(root.leaves());
+                       
+    tile.enter()
+        .append('rect')
+        .attr('x', d => d.x0)
+        .attr('y', d => d.y0)
+        .attr('width', d => d.x1 - d.x0)
+        .attr('height', d => d.y1 - d.y0)
+        .attr('fill',  d => colorScale(d.data.category))
+        .attr('data-name', d => d.data.name)
+        .attr('data-category', d => d.data.category)
+        .attr('data-value', d => d.data.value)
+        .attr('class', 'tile')
+        .merge(tile)
+        .transition()
+        .duration(1000)
+        .attr('x', d => d.x0)
+        .attr('y', d => d.y0)
+        .attr('width', d => d.x1 - d.x0)
+        .attr('height', d => d.y1 - d.y0)
+        .attr('fill', d => colorScale(d.data.category));
     
     tile.on('mouseover', function (event, d) {
         d3.select(this).attr('fill', '#ededff');
@@ -115,21 +134,62 @@ function drawTreemap() {
                 .style('top', (event.pageY + 10) + 'px');
     })
         .on('mouseout', function (event, d) {
-            d3.select(this).attr('fill', d => colorScale(d.data.category));
+            d3.select(this).attr('fill', colorScale(d.data.category));
 
             toolTip.style('display', 'none');
     });
+
+    tile.exit().remove();
     
-    svgMap.selectAll('text')
-          .data(root.leaves())
-          .enter()
-          .append('text')
-          .text(d => d.data.name)
-          .attr('x', d => d.x0 + 5)
-          .attr('y', d => d.y0 + 7)
-          .attr('font-size', '10px')
-          .attr('fill', 'black')        
-          .attr('class', 'tile-label');
+    // Tile Labels
+    const label = svgMap.selectAll('text')
+                        .data(root.leaves());
+          
+    label.enter()
+         .append('text')
+         .text(d => {
+            const tileWidth = d.x1 - d.x0;
+            const charLimit = Math.floor(tileWidth / 6);
+            return d.data.name.length > charLimit
+                ? d.data.name.substring(0, charLimit - 1) + '…'
+                : d.data.name;
+        })
+         .attr('x', d => d.x0 + 5)
+         .attr('y', d => d.y0 + 15)
+         .attr('font-size', '10px')
+         .attr('fill', 'black')        
+         .attr('class', 'tile-label')
+         .merge(label)
+         .transition()
+         .duration(1000)
+         .attr('x', d => d.x0 + 5)
+         .attr('y', d => d.y0 + 15);
+    
+    label.exit().remove();
+
+    //Legend
+    const legend = svgMap.append('g')
+                     .attr('id', 'legend')
+                     .attr('transform', `translate(150, ${mapHeight - padding / 2})`);
+
+    const legendItem = legend.selectAll('g')
+                             .data(colorScale.domain())
+                             .enter()
+                             .append('g')
+                             .attr('transform', (d, i) => `translate(${(i % 4) * 150}, ${Math.floor(i / 4) * 20})`);    
+    
+    legendItem.append('rect')
+              .attr('height', '12')
+              .attr('width', '12')
+              .fill(d => colorScale(d))
+              .attr('class', 'legend-item');
+
+    legendItem.append('text')
+              .text(d => d)
+              .attr('x', 20)
+              .attr('y', 6)
+              .attr('dy', '0.35em')
+              .style('font-size', '11px');
 
 };
 
