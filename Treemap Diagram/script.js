@@ -33,11 +33,12 @@ dropdown.addEventListener("change", function() {
     document.getElementById("title").textContent = selectedHeading["title"];
     document.getElementById("description").textContent = selectedHeading["description"];
 
+    treemap.innerHTML = "";
+
     fetch(selectedHeading["json"])
     .then(response => response.json())
     .then(data => {
         dataset = data;
-
         drawTreemap();
     });
 });
@@ -141,8 +142,10 @@ function drawTreemap() {
                      .attr('id', 'legend')
                      .attr('transform', `translate(150, ${mapHeight + padding / 2})`);
 
+    const legendCategories = [...new Set(root.leaves().map(d => d.data.category))];
+
     const legendItem = legend.selectAll('g')
-                             .data(colorScale)
+                             .data(legendCategories)
                              .enter()
                              .append('g')
                              .attr('transform', (d, i) => `translate(${(i % 4) * 150}, ${Math.floor(i / 4) * 20})`);    
@@ -150,11 +153,11 @@ function drawTreemap() {
     legendItem.append('rect')
               .attr('height', '12')
               .attr('width', '12')
-              .fill(d => colorScale(d.data.category))
+              .fill(d => colorScale(d))
               .attr('class', 'legend-item');
 
     legendItem.append('text')
-              .text(d => d.data.name)
+              .text(d => d)
               .attr('x', 20)
               .attr('y', 6)
               .attr('dy', '0.35em')
