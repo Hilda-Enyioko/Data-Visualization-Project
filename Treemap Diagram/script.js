@@ -47,13 +47,6 @@ const mapWidth = treemap.clientWidth;
 const mapHeight = 500;
 const padding = 50;
 
-//svg
-const svgMap = d3.select(treemap)
-                 .append('svg')
-                 .attr('id', 'svg-map')
-                 .attr('width', mapWidth)
-                 .attr('height', mapHeight + (2 * padding))
-
 function drawTreemap() {
 
     const root = d3.hierarchy(dataset)
@@ -74,13 +67,14 @@ function drawTreemap() {
     
     treemapLayout(root);
     
-    d3.select("#svg-map").exit().remove();
+    //svg
     const svgMap = d3.select(treemap)
                      .append('svg')
                      .attr('id', 'svg-map')
                      .attr('width', mapWidth)
                      .attr('height', mapHeight + (2 * padding));               
     
+    //tooltip                 
     const toolTip = d3.select(treemap)
                         .append('div')
                         .attr('id', 'tooltip')
@@ -145,10 +139,10 @@ function drawTreemap() {
 
     const legend = svgMap.append('g')
                      .attr('id', 'legend')
-                     .attr('transform', `translate(150, ${mapHeight - padding / 2})`);
+                     .attr('transform', `translate(150, ${mapHeight + padding / 2})`);
 
     const legendItem = legend.selectAll('g')
-                             .data(colorScale.domain())
+                             .data(colorScale)
                              .enter()
                              .append('g')
                              .attr('transform', (d, i) => `translate(${(i % 4) * 150}, ${Math.floor(i / 4) * 20})`);    
@@ -156,11 +150,11 @@ function drawTreemap() {
     legendItem.append('rect')
               .attr('height', '12')
               .attr('width', '12')
-              .fill(d => colorScale(d))
+              .fill(d => colorScale(d.data.category))
               .attr('class', 'legend-item');
 
     legendItem.append('text')
-              .text(d => d)
+              .text(d => d.data.name)
               .attr('x', 20)
               .attr('y', 6)
               .attr('dy', '0.35em')
