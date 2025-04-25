@@ -33,14 +33,53 @@ dropdown.addEventListener("change", function() {
     document.getElementById("title").textContent = selectedHeading["title"];
     document.getElementById("description").textContent = selectedHeading["description"];
 
-    treemap.innerHTML = "";
+    treemap.innerHTML = ""; // Clear previous content
 
-    fetch(selectedHeading["json"])
-    .then(response => response.json())
-    .then(data => {
-        dataset = data;
-        drawTreemap();
-    });
+    d3.select(treemap)
+            .transition()
+            .duration(1000)
+            .style("opacity", 0)
+            .style('height', '600px')
+            .style('width', '85%')
+
+            //Fade in effect
+            .on("end", function() {
+                d3.select(this)
+                .style("opacity", 1)
+                .style('height', 'fit-content')
+                .style('width', '95%');
+
+                // Change content after fade out
+                document.getElementById("title").textContent = selectedHeading["title"];
+                document.getElementById("description").textContent = selectedHeading["description"];
+
+                treemap.innerHTML = `<h2 class="loading-message">Loading ${selectedHeading["title"]} Dataset...</h2>`;
+
+                //clear loading message
+                d3.select(this)
+                    .transition()
+                    .duration(1000)
+                    .style("opacity", 0)
+                    .style('height', '600px')
+                    .style('width', '85%')
+        
+                    //Fade in effect
+                    .on("end", function() {
+
+                        // Fetch new data and draw the treemap
+                        fetch(selectedHeading["json"])
+                            .then(response => response.json())
+                            .then(data => {
+                                d3.select(treemap)
+                                .style("opacity", 1)
+                                .style('height', 'fit-content')
+                                .style('width', '95%');
+                                treemap.innerHTML = ""; // Clear previous content
+                                dataset = data;
+                                drawTreemap();
+                        });
+                    });
+            });
 });
 
 //svg dimensions
@@ -118,9 +157,10 @@ function drawTreemap() {
                 .style('top', (event.pageY + 10) + 'px');
     })
         .on('mouseout', function (event, d) {
-            d3.select(this).attr('fill', d => colorScale(d.data.category));
+            d3.select(this).attr('fill', colorScale(d.data.category));
 
             toolTip.style('display', 'none');
+            if (toolTip.style('display', 'none')) {console.log('tooltip hidden')}
     });
     
     //add tile labels
@@ -153,20 +193,24 @@ function drawTreemap() {
                              .data(legendCategories)
                              .enter()
                              .append('g')
-                             .attr('transform', (d, i) => `translate(${(i % 4) * 150}, ${Math.floor(i / 4) * 20})`);    
-    
+                             .attr('transform', (d, i) => {
+                                console.log(i, d);
+                                // Calculate the x and y position based on the index
+                                return (`translate(${(i % 4) * 150}, ${Math.floor(i / 4) * 20})`);
+                            });
+                            
     legendItem.append('rect')
               .attr('height', '12')
               .attr('width', '12')
-              .fill(d => colorScale(d))
+              .attr('fill', d => colorScale(d))
               .attr('class', 'legend-item');
-
+                            
     legendItem.append('text')
               .text(d => d)
               .attr('x', 20)
               .attr('y', 6)
               .attr('dy', '0.35em')
-              .style('font-size', '11px');
+              .style('font-size', '11px');    
 
 };
 

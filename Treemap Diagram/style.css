@@ -59,6 +59,12 @@ body {
     width: 95%;
     overflow-x: scroll;
     padding: 0 30px;
+    transition: padding 1s ease-in-out;
+}
+
+.loading-message {
+    margin: 100px auto;
+    text-align: center;
 }
 
 footer {
