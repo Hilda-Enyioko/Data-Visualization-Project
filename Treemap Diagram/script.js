@@ -88,6 +88,7 @@ function drawTreemap() {
                         .style('display', 'none')
                         .style('pointer-events', 'none');
 
+    //tiles                    
     const tile = svgMap.selectAll('rect')
                        .data(root.leaves())
                        .enter()
@@ -102,6 +103,7 @@ function drawTreemap() {
                        .attr('data-value', d => d.data.value)
                        .attr('class', 'tile');
     
+    //toogle tooltip on mouseover  and mouseout                 
     tile.on('mouseover', function (event, d) {
         d3.select(this).attr('fill', '#ededff');
 
@@ -121,6 +123,7 @@ function drawTreemap() {
             toolTip.style('display', 'none');
     });
     
+    //add tile labels
     svgMap.selectAll('text')
           .data(root.leaves())
           .enter()
@@ -138,11 +141,13 @@ function drawTreemap() {
           .attr('fill', 'black')        
           .attr('class', 'tile-label');
 
+    //add legend      
     const legend = svgMap.append('g')
                      .attr('id', 'legend')
                      .attr('transform', `translate(150, ${mapHeight + padding / 2})`);
 
     const legendCategories = [...new Set(root.leaves().map(d => d.data.category))];
+    console.log(legendCategories);
 
     const legendItem = legend.selectAll('g')
                              .data(legendCategories)
